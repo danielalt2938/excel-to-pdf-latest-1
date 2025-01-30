@@ -1,7 +1,7 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
 
-// Sample product data (replace with real data)
+// Sample product data (replace with real images & details)
 const products = [
     {
         title: "Milton Greens Stars",
@@ -17,7 +17,6 @@ const products = [
         imageUrl: "https://yourimageurl.com/image1.jpg" // Replace with actual image URL
     },
     {
-        title: "Milton Greens Stars",
         model: "M8023-SAND",
         color: "SAND",
         dimensions: "Sectional: 76.77 x 51.18 x 33.86 in. H",
@@ -30,54 +29,49 @@ const products = [
     }
 ];
 
-// Function to generate HTML for all product pages in one document
+// Function to generate full-page HTML using Tailwind CSS
 function generateProductHTML(products) {
     return `
-    <html>
+    <!DOCTYPE html>
+    <html lang="en">
     <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Product Catalog</title>
+        <script src="https://cdn.tailwindcss.com"></script>
         <style>
-            body { font-family: Arial, sans-serif; margin: 0; padding: 20px; width: 595px; height: 842px; background: white; }
-            .page { page-break-after: always; padding: 20px; }
-            .title { text-align: center; font-size: 24px; font-weight: bold; color: #006400; }
-            .subtitle { text-align: center; font-size: 18px; margin-bottom: 20px; }
-            .product-container { display: flex; flex-direction: column; align-items: center; margin-bottom: 20px; }
-            .product-image { width: 500px; height: auto; border: 1px solid #ddd; border-radius: 5px; }
-            .details { text-align: left; width: 500px; font-size: 14px; margin-top: 10px; }
-            .model { font-weight: bold; font-size: 16px; margin-bottom: 5px; }
-            .color { font-style: italic; color: gray; margin-bottom: 5px; }
-            .dimensions { margin-bottom: 5px; font-weight: bold; }
-            .features { margin-top: 10px; padding-left: 15px; }
+            @page { size: A4; margin: 0; }
+            html, body { width: 595px; height: 842px; margin: 0; padding: 0; }
+            .page { width: 100%; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+            .page-break { page-break-after: always; }
         </style>
     </head>
-    <body>
+    <body class="bg-gray-100 text-gray-900">
         ${products.map(product => `
-            <div class="page">
-                <div class="title">${product.title}</div>
-                <div class="subtitle">${product.subtitle || ""}</div>
-                <div class="product-container">
-                    <img src="${product.imageUrl}" class="product-image" />
-                    <div class="details">
-                        <div class="model">${product.model}</div>
-                        <div class="color">${product.color}</div>
-                        <div class="dimensions">${product.dimensions}</div>
-                        <ul class="features">
-                            ${product.features.map(feature => `<li>${feature}</li>`).join('')}
-                        </ul>
-                    </div>
-                </div>
+            <div class="page bg-white shadow-lg flex flex-col items-center justify-center p-10">
+                <h1 class="text-4xl font-bold text-green-700 text-center">${product.title}</h1>
+                <h2 class="text-2xl text-gray-600 text-center mt-2">${product.subtitle || ""}</h2>
+                <img src="${product.imageUrl}" class="w-[500px] h-auto rounded-lg shadow-md mt-4" />
+                <p class="text-lg font-semibold mt-4">Model: <span class="font-bold">${product.model}</span></p>
+                <p class="italic text-gray-500">Color: ${product.color}</p>
+                <p class="mt-2 font-medium">Dimensions: ${product.dimensions}</p>
+                <ul class="mt-4 list-disc text-left w-3/4 text-gray-700">
+                    ${product.features.map(feature => `<li>${feature}</li>`).join('')}
+                </ul>
             </div>
+            <div class="page-break"></div>
         `).join('')}
     </body>
     </html>
     `;
 }
 
-// Function to generate a PDF from the entire HTML document
+// Function to generate a PDF from HTML with Tailwind
 async function createPDF(products, outputPath) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    // Generate the full HTML content with multiple product pages
+    // Generate the full HTML content with Tailwind
     const htmlContent = generateProductHTML(products);
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
