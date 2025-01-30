@@ -2,6 +2,7 @@
   "dependencies": {
     "fs": "^0.0.1-security",
     "pdf-lib": "^1.17.1",
+    "puppeteer": "^24.1.1",
     "sharp": "^0.33.5"
   }
 }
