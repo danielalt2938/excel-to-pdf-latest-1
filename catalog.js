@@ -40,22 +40,22 @@ function generateProductHTML(products) {
         <title>Product Catalog</title>
         <script src="https://cdn.tailwindcss.com"></script>
         <style>
-            @page { size: A4; margin: 0; }
-            html, body { width: 595px; height: 842px; margin: 0; padding: 0; }
-            .page { width: 100%; height: 100vh; display: flex; flex-direction: column; justify-content: center; align-items: center; }
+            @page { size: A4; margin: 0; }  /* Ensures full A4 size */
+            html, body { margin: 0; padding: 0; width: 595px; height: 842px; }
+            .page { width: 595px; height: 842px; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center; }
             .page-break { page-break-after: always; }
         </style>
     </head>
     <body class="bg-gray-100 text-gray-900">
         ${products.map(product => `
-            <div class="page bg-white shadow-lg flex flex-col items-center justify-center p-10">
-                <h1 class="text-4xl font-bold text-green-700 text-center">${product.title}</h1>
-                <h2 class="text-2xl text-gray-600 text-center mt-2">${product.subtitle || ""}</h2>
-                <img src="${product.imageUrl}" class="w-[500px] h-auto rounded-lg shadow-md mt-4" />
+            <div class="page bg-white shadow-lg p-0">
+                <h1 class="text-4xl font-bold text-green-700">${product.title}</h1>
+                <h2 class="text-2xl text-gray-600 mt-2">${product.subtitle || ""}</h2>
+                <img src="${product.imageUrl}" class="w-[595px] h-[300px] object-cover mt-4" />
                 <p class="text-lg font-semibold mt-4">Model: <span class="font-bold">${product.model}</span></p>
                 <p class="italic text-gray-500">Color: ${product.color}</p>
                 <p class="mt-2 font-medium">Dimensions: ${product.dimensions}</p>
-                <ul class="mt-4 list-disc text-left w-3/4 text-gray-700">
+                <ul class="mt-4 list-disc list-inside text-gray-700">
                     ${product.features.map(feature => `<li>${feature}</li>`).join('')}
                 </ul>
             </div>
@@ -66,16 +66,19 @@ function generateProductHTML(products) {
     `;
 }
 
-// Function to generate a PDF from HTML with Tailwind
+// Function to generate a multi-page PDF with Tailwind styles
 async function createPDF(products, outputPath) {
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
-    // Generate the full HTML content with Tailwind
+    // Generate the full HTML content
     const htmlContent = generateProductHTML(products);
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
-    // Generate a multi-page PDF
+    // Force Puppeteer to wait for Tailwind CSS to load and apply styles
+    await page.evaluate(() => new Promise(resolve => setTimeout(resolve, 1000)));
+
+    // Generate multi-page PDF
     await page.pdf({
         path: outputPath,
         format: "A4",
