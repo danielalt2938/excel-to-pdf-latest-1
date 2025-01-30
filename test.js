@@ -40,9 +40,9 @@ async function createPDF(imagePaths, firstPagePath, lastPagePath, outputPath) {
 }
 
 // Example Usage
-const images = ["image1.jpg", "image2.jpg", "image3.jpg"]; // List of images
-const firstPage = "first_page_design.jpg"; // Custom first page
-const lastPage = "last_page_design.jpg";   // Custom last page
+const images = ["./image.png","./image.png","./image.png","./image.png","./image.png"]; // List of images
+const firstPage = "./front-image.png"; // Custom first page
+const lastPage = "./front-image.png";   // Custom last page
 const outputPDF = "output.pdf";
 
 createPDF(images, firstPage, lastPage, outputPDF)
