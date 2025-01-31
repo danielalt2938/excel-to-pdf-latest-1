@@ -82,19 +82,26 @@ fs.createReadStream('houston-lion.csv') // Replace with your CSV file
 title:'Houston Inventory Sale',
         subtitle: row['Description'],
         model: row['Item No.'],
-        imageUrl: `https://dallas.goupdated.com/Image/LoadImage?image_name=${row['Item No.']}.jpg&width=1200&height=1200` // Replace with actual image URL
+        imageUrl: `https://dallas.goupdated.com/Image/LoadImage?image_name=${row['Item No.']}.jpg&width=1200&height=1200`, // Replace with actual image URL
+        color: "LIGHT GRAY",
+        dimensions: "Sectional: 76.77 x 51.18 x 33.86 in. H",
+        features: [
+            "Linen Tufted Back Upholstered",
+            "Reversible Chaise Sectional Sofa",
+            "Square Armrest",
+        ],
     });
 }
   })
   .on('end', async () => {
     // Save the JSON to a file
     // fs.writeFileSync('output.json', JSON.stringify(results, null, 2));
-console.log(results.length)
+// console.log(results)
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
     // Generate the full HTML content
-    const htmlContent = generateProductHTML(products);
+    const htmlContent = generateProductHTML(results);
     await page.setContent(htmlContent, { waitUntil: "networkidle0" });
 
     // Force Puppeteer to wait for Tailwind CSS to load and apply styles
