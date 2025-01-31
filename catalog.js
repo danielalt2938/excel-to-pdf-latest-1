@@ -1,5 +1,7 @@
 const puppeteer = require("puppeteer");
 const fs = require("fs");
+const csv = require('csv-parser');
+
 
 // Sample product data (replace with real images & details)
 const products = [
@@ -69,6 +71,25 @@ function generateProductHTML(products) {
 
 // Function to generate a multi-page PDF with Tailwind styles
 async function createPDF(products, outputPath) {
+// Read CSV file and convert it to JSON
+const results = [];
+
+fs.createReadStream('houston-lion.csv') // Replace with your CSV file
+  .pipe(csv())
+  .on('data', (row) => {
+    if(row.quantity){  
+    results.push({
+title:'Houston Inventory Sale',
+        subtitle: row['Description'],
+        model: row['Item No.'],
+        imageUrl: `https://dallas.goupdated.com/Image/LoadImage?image_name=${row['Item No.']}.jpg&width=1200&height=1200` // Replace with actual image URL
+    });
+}
+  })
+  .on('end', async () => {
+    // Save the JSON to a file
+    // fs.writeFileSync('output.json', JSON.stringify(results, null, 2));
+console.log(results.length)
     const browser = await puppeteer.launch();
     const page = await browser.newPage();
 
@@ -89,6 +110,11 @@ async function createPDF(products, outputPath) {
 
     await browser.close();
     console.log(`✅ PDF saved to: ${outputPath}`);
+  });
+
+
+
+
 }
 
 // Run the PDF generator
