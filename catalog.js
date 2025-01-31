@@ -54,7 +54,7 @@ function generateProductHTML(products) {
             <div class="page bg-white shadow-lg p-0">
                 <h1 class="text-4xl font-bold text-green-700">${product.title}</h1>
                 <h2 class="text-2xl text-gray-600 mt-2">${product.subtitle || ""}</h2>
-                <img src="${product.imageUrl}" class="w-[595px] h-[300px] object-cover mt-4" />
+                <img src="${product.imageUrl}" class="w-[595px] h-[300px] object-contain mt-4" />
                 <p class="text-lg font-semibold mt-4">Model: <span class="font-bold">${product.model}</span></p>
                 <p class="italic text-gray-500">Color: ${product.color}</p>
                 <p class="mt-2 font-medium">Dimensions: ${product.dimensions}</p>
@@ -83,12 +83,12 @@ title:'Houston Inventory Sale',
         subtitle: row['Description'],
         model: row['Item No.'],
         imageUrl: `https://dallas.goupdated.com/Image/LoadImage?image_name=${row['Item No.']}.jpg&width=1200&height=1200`, // Replace with actual image URL
-        color: "LIGHT GRAY",
-        dimensions: "Sectional: 76.77 x 51.18 x 33.86 in. H",
+        color: "DEMO: LIGHT GRAY",
+        dimensions: "DEMO: Sectional: 76.77 x 51.18 x 33.86 in. H",
         features: [
-            "Linen Tufted Back Upholstered",
-            "Reversible Chaise Sectional Sofa",
-            "Square Armrest",
+            "DEMO: Linen Tufted Back Upholstered",
+            "DEMO: Reversible Chaise Sectional Sofa",
+            "DEMO: Square Armrest",
         ],
     });
 }
