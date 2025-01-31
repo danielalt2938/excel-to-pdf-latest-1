@@ -14,9 +14,10 @@ const products = [
             "Reversible Chaise Sectional Sofa",
             "Square Armrest",
         ],
-        imageUrl: "https://yourimageurl.com/image1.jpg" // Replace with actual image URL
+        imageUrl: "https://dallas.goupdated.com/Image/LoadImage?image_name=171.jpg&width=1200&height=1200" // Replace with actual image URL
     },
     {
+        title: "Milton Greens Stars",
         model: "M8023-SAND",
         color: "SAND",
         dimensions: "Sectional: 76.77 x 51.18 x 33.86 in. H",
@@ -25,7 +26,7 @@ const products = [
             "Reversible Chaise Sectional Sofa",
             "Square Armrest",
         ],
-        imageUrl: "https://yourimageurl.com/image2.jpg" // Replace with actual image URL
+        imageUrl: "https://dallas.goupdated.com/Image/LoadImage?image_name=171.jpg&width=1200&height=1200" // Replace with actual image URL
     }
 ];
 
