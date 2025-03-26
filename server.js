@@ -39,28 +39,13 @@ function generateProductHTML(products) {
         ${products
           .map(
             (product) => `
-            <div class="page bg-white shadow-lg p-4">
-                <h1 class="text-4xl font-bold text-green-700">${
-                  product.title
-                }</h1>
-                <h2 class="text-2xl text-gray-600 mt-2">${
-                  product.subtitle || ""
-                }</h2>
-                <img src="${
-                  product.imageUrl
-                }" class="w-[595px] h-[300px] object-contain mt-4 text-gray-500" />
-                <p class="text-lg font-semibold mt-4">Model: <span class="font-bold">${
-                  product.model
-                }</span></p>
-                <p class="italic text-gray-500">Color: ${product.color}</p>
-                <p class="mt-2 font-medium">Dimensions: ${
-                  product.dimensions
-                }</p>
-                <ul class="mt-4 list-disc list-inside text-gray-700">
-                    ${product.features
-                      .map((feature) => `<li>${feature}</li>`)
-                      .join("")}
-                </ul>
+            <div class="page bg-white shadow-lg p-4">               
+                <img src="${product.imageUrl}" class="w-[595px] h-[300px] object-contain mt-4 text-gray-500" />
+                <h1 class="text-2xl font-bold text-green-700">${product.title}</h1>
+                <p class="text-lg font-semibold mt-4">SKU: <span class="font-bold">${product.sku}</span></p>
+                <p class="italic text-gray-500">Price: ${product.price}</p>
+                <p class="mt-2 font-medium">Dimensions: ${product.description1}</p>
+                   <p class="mt-2 font-medium">Dimensions: ${product.description2}</p>             
             </div>
             <div class="page-break"></div>
         `
